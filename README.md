@@ -1,10 +1,14 @@
-# shee
-suraksha-sakhi/
+# SHEE
+
 │
 ├── index.html
+
 ├── style.css
+
 ├── script.js
+
 ├── assets/
+
 └── README.md
 mart Women Safety & Emergency Alert System
 
