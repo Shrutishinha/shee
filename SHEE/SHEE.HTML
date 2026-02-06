@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shee - Visual Preview</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes breathe {
+            0%, 100% {
+                box-shadow: 0 10px 30px rgba(255, 23, 68, 0.4),
+                            0 0 0 0 rgba(255, 23, 68, 0.4);
+            }
+            50% {
+                box-shadow: 0 10px 40px rgba(255, 23, 68, 0.6),
+                            0 0 0 15px rgba(255, 23, 68, 0);
+            }
+        }
+
+        @keyframes powerRipple {
+            0% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(2.5);
+                opacity: 0;
+            }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 8px 25px rgba(253, 203, 110, 0.4); }
+            50% { box-shadow: 0 10px 35px rgba(253, 203, 110, 0.7), 0 0 50px rgba(253, 203, 110, 0.5); }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes textGlow {
+            0%, 100% { text-shadow: 0 0 20px rgba(255, 255, 255, 0.5); }
+            50% { text-shadow: 0 0 30px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 255, 255, 0.6); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(255, 182, 193, 0.2) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .decorative-circle {
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .circle-1 {
+            top: -100px;
+            right: -100px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255, 107, 157, 0.3), transparent 70%);
+            animation: float 15s ease-in-out infinite;
+        }
+
+        .circle-2 {
+            bottom: -50px;
+            left: -50px;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(35, 166, 213, 0.3), transparent 70%);
+            animation: float 12s ease-in-out infinite 2s;
+        }
+
+        .circle-3 {
+            top: 50%;
+            left: 10%;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(238, 119, 82, 0.2), transparent 70%);
+            animation: float 18s ease-in-out infinite 4s;
+        }
+
+        .emoji-float {
+            position: fixed;
+            font-size: 2.5em;
+            animation: float 6s ease-in-out infinite, sparkle 3s ease-in-out infinite;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+            animation: slideUp 0.8s ease-out;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+        }
+
+        header {
+            background: linear-gradient(135deg, #ff6b9d 0%, #c2185b 50%, #ff6b9d 100%);
+            background-size: 200% 200%;
+            animation: gradientShift 4s ease infinite;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        header::before {
+            content: '👑';
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 2em;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        header::after {
+            content: '🌟';
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            font-size: 2em;
+            animation: float 4s ease-in-out infinite 1s;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            animation: textGlow 2s ease-in-out infinite;
+        }
+
+        .tagline {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+
+        main {
+            padding: 30px 20px;
+        }
+
+        .empowerment-message {
+            margin-bottom: 30px;
+        }
+
+        .message-card {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 50%, #fab1a0 100%);
+            background-size: 200% 200%;
+            animation: gradientShift 5s ease infinite, glow 3s ease-in-out infinite;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .message-card::before {
+            content: '✨';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 1.5em;
+            animation: sparkle 2s ease-in-out infinite;
+        }
+
+        .message-card::after {
+            content: '✨';
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            font-size: 1.5em;
+            animation: sparkle 2s ease-in-out infinite 1s;
+        }
+
+        .message-icon {
+            font-size: 2.5em;
+            display: block;
+            margin-bottom: 15px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .message-text {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #333;
+            font-style: italic;
+        }
+
+        .sos-section {
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+        }
+
+        .sos-section::before {
+            content: '💖 You Are Strong 💖';
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.2em;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ff6b9d, #ffa726, #ff6b9d);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 3s ease infinite;
+        }
+
+        .sos-container {
+            position: relative;
+            display: inline-block;
+            margin-top: 30px;
+        }
+
+        .sos-button {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(135deg, #ff1744 0%, #d50000 50%, #ff1744 100%);
+            background-size: 200% 200%;
+            color: white;
+            font-size: 3em;
+            font-weight: bold;
+            cursor: pointer;
+            animation: breathe 3s ease-in-out infinite, gradientShift 4s ease infinite;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 15px 40px rgba(255, 23, 68, 0.5);
+        }
+
+        .sos-text {
+            font-size: 1em;
+        }
+
+        .sos-subtext {
+            font-size: 0.25em;
+            margin-top: 10px;
+        }
+
+        .sos-ripple {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            border: 3px solid #ff1744;
+            animation: powerRipple 1.5s ease infinite;
+        }
+
+        .feature-section {
+            margin: 30px 0;
+            padding: 25px;
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .location-section {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border-left: 4px solid #2196f3;
+            box-shadow: 0 5px 15px rgba(33, 150, 243, 0.2);
+        }
+
+        .location-section::before {
+            content: '📍';
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            font-size: 4em;
+            opacity: 0.15;
+        }
+
+        .contacts-section {
+            background: linear-gradient(135deg, #f8e5f5 0%, #e1bee7 100%);
+            border-left: 4px solid #e91e63;
+            box-shadow: 0 5px 15px rgba(233, 30, 99, 0.2);
+        }
+
+        .contacts-section::before {
+            content: '📞';
+            position: absolute;
+            bottom: 10px;
+            right: 20px;
+            font-size: 4em;
+            opacity: 0.15;
+        }
+
+        .quick-actions {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            border-left: 4px solid #ff9800;
+            box-shadow: 0 5px 20px rgba(255, 152, 0, 0.2);
+        }
+
+        .quick-actions::before {
+            content: '⚡';
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 3em;
+            opacity: 0.2;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            padding-left: 15px;
+            background: linear-gradient(135deg, #ff6b9d, #e91e63);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .feature-content {
+            position: relative;
+            z-index: 1;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 20px 10px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255, 107, 157, 0.3);
+            border-color: #ff6b9d;
+        }
+
+        .action-icon {
+            font-size: 2.5em;
+            display: block;
+            margin-bottom: 10px;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        .action-btn:nth-child(2) .action-icon {
+            animation-delay: 0.3s;
+        }
+
+        .action-btn:nth-child(3) .action-icon {
+            animation-delay: 0.6s;
+        }
+
+        .action-label {
+            font-weight: 600;
+            color: #333;
+            font-size: 0.9em;
+        }
+
+        .action-number {
+            font-weight: bold;
+            background: linear-gradient(135deg, #ff6b9d, #e91e63);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 1.2em;
+            margin-top: 5px;
+        }
+
+        footer {
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+            text-align: center;
+            padding: 25px;
+            color: #666;
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #ff6b9d, #e91e63, #ff6b9d);
+            background-size: 200% 100%;
+            animation: gradientShift 3s linear infinite;
+        }
+
+        .features-list {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .features-list ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .features-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .features-list li:last-child {
+            border-bottom: none;
+        }
+
+        @media (max-width: 600px) {
+            .action-buttons {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .sos-button {
+                width: 180px;
+                height: 180px;
+                font-size: 2.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Decorative Background Elements -->
+    <div class="decorative-circle circle-1"></div>
+    <div class="decorative-circle circle-2"></div>
+    <div class="decorative-circle circle-3"></div>
+    
+    <!-- Floating Emojis -->
+    <div class="emoji-float" style="top: 15%; left: 5%;">✨</div>
+    <div class="emoji-float" style="top: 25%; right: 8%;">💖</div>
+    <div class="emoji-float" style="bottom: 30%; left: 10%;">💪</div>
+    <div class="emoji-float" style="bottom: 15%; right: 12%;">🌟</div>
+    <div class="emoji-float" style="top: 60%; left: 15%;">🦋</div>
+    <div class="emoji-float" style="top: 40%; right: 5%;">👑</div>
+    
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>🛡️ Shee</h1>
+            <p class="tagline">Your Safety, Our Priority</p>
+        </header>
+
+        <!-- Main Content -->
+        <main>
+            <!-- Empowerment Message -->
+            <section class="empowerment-message">
+                <div class="message-card">
+                    <span class="message-icon">💪</span>
+                    <p class="message-text">"You are brave. You are strong. You are protected."</p>
+                </div>
+            </section>
+
+            <!-- SOS Section -->
+            <section class="sos-section">
+                <div class="sos-container">
+                    <button class="sos-button">
+                        <span class="sos-text">SOS</span>
+                        <span class="sos-subtext">Press for Emergency</span>
+                    </button>
+                    <div class="sos-ripple"></div>
+                </div>
+            </section>
+
+            <!-- Location Section -->
+            <section class="feature-section location-section">
+                <h2>📍 Current Location</h2>
+                <div class="feature-content">
+                    <p><strong>Real-time GPS tracking</strong> ensures your exact location is shared instantly with your emergency contacts.</p>
+                    <div class="features-list">
+                        <ul>
+                            <li>🗺️ Precise coordinates</li>
+                            <li>🔗 Google Maps integration</li>
+                            <li>⚡ Instant location sharing</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contacts Section -->
+            <section class="feature-section contacts-section">
+                <h2>📞 Emergency Contacts</h2>
+                <div class="feature-content">
+                    <p><strong>Build your safety network</strong> by adding trusted contacts who will receive alerts in emergencies.</p>
+                    <div class="features-list">
+                        <ul>
+                            <li>👥 Unlimited contacts</li>
+                            <li>📱 Phone & email support</li>
+                            <li>💾 Locally stored (private)</li>
+                            <li>✨ Easy management</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quick Actions -->
+            <section class="feature-section quick-actions">
+                <h2>⚡ Quick Actions</h2>
+                <div class="feature-content">
+                    <p><strong>Direct access</strong> to emergency services with one tap.</p>
+                    <div class="action-buttons">
+                        <div class="action-btn">
+                            <span class="action-icon">🚓</span>
+                            <div class="action-label">Police</div>
+                            <div class="action-number">100</div>
+                        </div>
+                        <div class="action-btn">
+                            <span class="action-icon">🚑</span>
+                            <div class="action-label">Ambulance</div>
+                            <div class="action-number">108</div>
+                        </div>
+                        <div class="action-btn">
+                            <span class="action-icon">📞</span>
+                            <div class="action-label">Helpline</div>
+                            <div class="action-number">1091</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <p>Made with ❤️ by Shruti | Stay Safe, Stay Strong</p>
+            <p style="margin-top: 10px; font-size: 0.85em;">🌟 Empowering women through technology 🌟</p>
+        </footer>
+    </div>
+</body>
+</html>
