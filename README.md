@@ -1,6 +1,7 @@
 # SHEE
 A WEBSITE FOR WOMEN SAFETY
-│
+
+
 ├── index.html
 
 ├── style.css
