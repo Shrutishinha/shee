@@ -1,5 +1,3 @@
-
-
 <p align="center">
   <img src="https://capsule-render.vercel.app/api?type=waving&color=0:ff416c,50:ff4b2b,100:7c3aed&height=220&section=header&text=SHEE%20%7C%20SURAKSHASAKHI&fontSize=34&fontColor=ffffff&animation=fadeIn&fontAlignY=38" width="100%"/>
 </p>
