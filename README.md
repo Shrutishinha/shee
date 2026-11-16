@@ -2,7 +2,7 @@
   <img src="https://capsule-render.vercel.app/api?type=waving&color=0:ff416c,50:ff4b2b,100:7c3aed&height=220&section=header&text=SHEE%20%7C%20SURAKSHASAKHI&fontSize=34&fontColor=ffffff&animation=fadeIn&fontAlignY=38" width="100%"/>
 </p>
 
-<p align="center">hi
+<p align="center">
   <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&weight=600&size=22&duration=3000&pause=900&color=FF416C&center=true&vCenter=true&width=900&lines=SMART+WOMEN+SAFETY+SYSTEM;REAL-TIME+SOS+EMERGENCY+ALERTS;LIVE+GPS+LOCATION+TRACKING;TECHNOLOGY+FOR+PERSONAL+SAFETY;BUILDING+SAFER+COMMUNITIES" alt="Typing SVG"/>
 </p>
 
